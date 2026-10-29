@@ -1,0 +1,48 @@
+HACI USTA PİŞİRİRİM EVİ — Yönetici Paneli
+
+KURULUM VE YAYINLAMA
+İki kullanım biçimi vardır: index.html dosyasını doğrudan açarak bu cihazda yerel kullanım veya Node.js sunucusuna yükleyerek güvenli HTTPS üzerinden merkezi kullanım.
+
+YEREL KULLANIM
+1. index.html dosyasını güncel bir tarayıcıda açın. Kayıtlar aynı tarayıcı ve cihazdaki yerel depolamada tutulur.
+2. Düzenli yedek için Yedekleme sekmesinden JSON yedeği indirin.
+
+SUNUCUYA YÜKLEYEREK KULLANIM
+1. Proje klasörünü Node.js 20 veya üzeri destekleyen hosting hesabınıza yükleyin.
+2. Bağımlılıkları yükleyin: npm install
+3. Başlatma komutu olarak npm start kullanın.
+4. Hosting panelinde aşağıdaki ortam değişkenlerini tanımlayın:
+   - NODE_ENV=production
+   - Yönetici hesabı varsayılan olarak İBO AĞA / İBRAHİM5600 olarak tanımlıdır. İstenirse hosting ortam değişkenleriyle değiştirilebilir.
+   - SESSION_SECRET=uzun ve rastgele, en az 32 karakterlik gizli değer
+   - DB_PATH=hosting sağlayıcısının kalıcı diskindeki SQLite dosya yolu
+   PORT değerini hosting platformu kendisi sağlıyorsa ayrıca tanımlamanız gerekmez.
+5. Alan adınızda HTTPS/TLS etkin olduğundan emin olun. Üretim ortamında güvenli oturum çerezi HTTPS gerektirir.
+6. Yönetici girişi yalnızca sunucuda doğrulanır. Parolayı HTML/JavaScript dosyasına, bu klasöre veya herkese açık yapılandırmaya yazmayın; hosting panelinin gizli ortam değişkenlerini kullanın.
+
+KULLANIM
+1. Sunucu kullanımında yayındaki HTTPS adresini açıp tek yönetici hesabıyla giriş yapın. Yerel kullanımda dosya açıldığında doğrudan panel görüntülenir.
+2. İşlem Ekle sekmesinden gelir, gider, borç verme, borç tahsilatı veya personel harcaması kaydedin.
+3. Gün sonunda gerçek kasa tutarını yazıp gün sonunu kaydedin. Kapanış tutarı sonraki günün açılış kasasına otomatik aktarılır.
+4. Raporlar sekmesinden aylık gelir-gider, kâr-zarar, kategori özeti ve günlük kasa tablosunu inceleyin.
+5. Excel raporu indir düğmesi birden fazla sayfalı XLSX dosyası oluşturur (internet bağlantısı gerekir). CSV indir de Excel ile açılır.
+6. Yazdır / PDF kaydet düğmesi tarayıcının yazdır penceresini açar.
+7. Müşteri Borçları sekmesi kişi bazında borçları; Personel Harcamaları sekmesi personel bazında harcamaları gösterir.
+8. Yedekleme sekmesinden JSON yedeği indirin. Geri yükleme sunucudaki kayıtları yedekteki kayıtlarla değiştirir.
+
+ESKİ TARAYICI KAYITLARINI TAŞIMA
+1. Bu klasördeki index.html dosyasını eski kayıtların bulunduğu aynı tarayıcıda ve cihazda dosya olarak açın.
+2. Açılan eski kayıt aktarım ekranında kayıt adedini kontrol edip JSON yedeği indirin.
+3. Yeni HTTPS adresine yönetici olarak giriş yapın.
+4. Yedekleme sekmesinde JSON yedeğini içe aktarın ve onaylayın.
+5. Kayıt sayısını kontrol edin, yeni bir yedek indirip güvenli bir yerde saklayın.
+
+VERİ VE GÜVENLİK
+- Yerel kullanımda kayıtlar cihazdaki tarayıcıda; sunucu kullanımında SQLite veritabanında saklanır.
+- Sunucu kullanımında DB_PATH mutlaka hosting sağlayıcısının yeniden başlatmalarda silinmeyen kalıcı diskini göstermelidir.
+- Düzenli JSON yedeği alın. Yedek dosyaları finansal veri içerdiğinden özel ve güvenli saklanmalıdır.
+- Sunucu oturumları SQLite'da tutulur; yönetici oturumu 8 saat sonra sona erer ve başarısız girişler sınırlanır.
+- Sunucu kullanımında yönetici şifresi açılışta scrypt ile özetlenir; düz metin olarak veritabanına kaydedilmez. Yerel dosya kullanımında giriş bilgileri istemci dosyasında yer aldığından yalnızca kişisel cihazda kullanın. Güçlü ve başka yerde kullanılmayan uzun bir şifre seçin.
+- Sunucu kullanımında SESSION_SECRET değerini kimseyle paylaşmayın; kaynak koduna veya yedeklere eklemeyin. Yönetici bilgilerini paylaşmayın.
+- SESSION_SECRET için hosting sağlayıcısının gizli değer üretecini veya en az 32 karakterlik rastgele bir değeri kullanın.
+- Excel dışa aktarımı için internet bağlantısı gerekir. Uygulama parola, oturum ve işletme verilerini üçüncü taraf servislere göndermez.
